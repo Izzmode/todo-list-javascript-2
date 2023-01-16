@@ -77,23 +77,64 @@ const createTodoElement = (todoInput) =>{
 
 
 
-//hämtar det som skrivs och validerar
-form.addEventListener('submit', (e) =>{
-e.preventDefault();
-const input = form.querySelector('input');
-const inputValue = input.value;
+const addTodos = (e) => {
 
-if(inputValue.trim().length == ""){
-    //skapa ett element och lägg till innertext
-    return
-};
+    ////hämtar det som skrivs och validerar
+        e.preventDefault();
+        const input = form.querySelector('input');
+        const inputValue = input.value;
+        
+        if(inputValue.trim().length == ""){
+            //skapa ett element och lägg till innertext
+            return
+        };
+        
+        // const todoItem = createTodoElement(inputValue);
+        // todoListCard.appendChild(todoItem);
+        
+        input.value= '';
 
-const todoItem = createTodoElement(inputValue);
-todoListCard.appendChild(todoItem);
 
-input.value= '';
+        //Skapar objekt att skicka till databasen
+        const newTodo = {
+            title: inputValue
+        }
+        console.log(newTodo)
+        
+        fetch(BASE_URL, {
+            method: 'POST', 
+            body: JSON.stringify(newTodo),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then(res => res.json())
+            .then (data => {
+              todosArray.push(data);
+              const todoItem = createTodoElement(inputValue);
+              todoListCard.appendChild(todoItem);
+            })
 
-})
+}
+
+
+form.addEventListener('submit', addTodos);
+// (e) =>{
+// e.preventDefault();
+// const input = form.querySelector('input');
+// const inputValue = input.value;
+
+// if(inputValue.trim().length == ""){
+//     //skapa ett element och lägg till innertext
+//     return
+// };
+
+// const todoItem = createTodoElement(inputValue);
+// todoListCard.appendChild(todoItem);
+
+// input.value= '';
+
+// })
 
 
 
