@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+
+.card{
+    width: 40rem;
+    background-color: chocolate;
+    height: 90vh;
+    overflow: auto;
+}
+
+form{
+    background-color: darkslategray;
+    padding: 1rem;
+    display: flex;
+}
+
+form input {
+    flex:1;
+    padding: 0.3rem;
+    outline: none;
+    border: none;
+    border-radius: 1rem 0 0 1rem;
+}
+
+form button {
+    outline: none;
+    border: none;
+    background-color: white;
+    border-radius: 0 1rem 1rem 0;
+    padding: .4rem;
+    padding-right: 1rem;
+    cursor: pointer;
+}
+
+form button:hover{
+    background-color: rgb(224, 221, 221);
+}
+
+.todos{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkslategrey;
+    padding: 0.4rem;
+}
+
+.todos p{
+    margin-bottom: 0;
+}
+
+.done{
+    text-decoration: line-through;
+    color: grey;
+}
+
