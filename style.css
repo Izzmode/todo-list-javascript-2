@@ -18,10 +18,11 @@
     background-color: chocolate;
     height: 90vh;
     overflow: auto;
+    /* vertical-align: bottom; */
 }
 
 form{
-    background-color: darkslategray;
+    /* background-color: darkslategray; */
     padding: 1rem;
     display: flex;
 }
@@ -55,9 +56,11 @@ form button:hover{
     padding: 0.4rem;
 }
 
-.todos p{
-    margin-bottom: 0;
-}
+/* .todos p{
+    margin-bottom: 0px !important;
+    margin-block-start: 0px !important;
+    margin-block-end: 0px !important;
+} */
 
 .done{
     text-decoration: line-through;

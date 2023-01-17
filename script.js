@@ -1,5 +1,5 @@
 const form = document.querySelector('.card form');
-const BASE_URL = 'https://jsonplaceholder.typicode.com/todos';
+const BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';
 const todosArray = [];
 const todoListCard = document.querySelector('.card');
 
@@ -18,20 +18,21 @@ const getTodos = () => {
 
 getTodos();
 
-//Listar upp todosen i DOMen
+// Listar upp todosen i DOMen
 const listTodos = () => {
 todosArray.forEach(todo => {
-    // const todoElement = jsonTodoElement(todoItem);
-    // todoListCard.appendChild(todoElement);
 
-    todoItem = document.createElement('div');
+    const todoItem = document.createElement('div');
     todoItem.classList.add('todos');
 
-    pInput = document.createElement('p');
+    const pInput = document.createElement('p');
     pInput.innerText = todo.title;
 
-    btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.innerText = 'delete';
+    btn.classList.add('btn')
+    btn.classList.add('btn-dark')
+    btn.id = todo.id;
 
     todoItem.appendChild(pInput);
     todoItem.appendChild(btn);
@@ -39,18 +40,22 @@ todosArray.forEach(todo => {
 })
 };
 
+
 console.log(todosArray)
 
 //Skapa element som läggs till vid submit
 const createTodoElement = (todoInput) =>{
-    todoItem = document.createElement('div');
+    const todoItem = document.createElement('div');
     todoItem.classList.add('todos');
 
-    pInput = document.createElement('p');
+    const pInput = document.createElement('p');
     pInput.innerText = todoInput;
 
-    btn = document.createElement('button');
+    const btn = document.createElement('button');
+    btn.classList.add('btn')
+    btn.classList.add('btn-dark')
     btn.innerText = 'delete';
+    
 
     todoItem.appendChild(pInput);
     todoItem.appendChild(btn);
@@ -58,24 +63,8 @@ const createTodoElement = (todoInput) =>{
     return todoItem
 }
 
-// //funktion för att visa json todos
-// const jsonTodoElement = (todoInput) =>{
-//     todoItem = document.createElement('div');
-//     todoItem.classList.add('todos');
 
-//     pInput = document.createElement('p');
-//     pInput.innerText = todoInput.title;
-
-//     btn = document.createElement('button');
-//     btn.innerText = 'delete';
-
-//     todoItem.appendChild(pInput);
-//     todoItem.appendChild(btn);
-
-//     return todoItem
-// }
-
-
+//HÄMTAR ANVÄNDARINPUT OCH POSTAR TILL DATABAS
 
 const addTodos = (e) => {
 
@@ -85,15 +74,11 @@ const addTodos = (e) => {
         const inputValue = input.value;
         
         if(inputValue.trim().length == ""){
-            //skapa ett element och lägg till innertext
+            //tbd skapa ett element och lägg till innertext
             return
         };
         
-        // const todoItem = createTodoElement(inputValue);
-        // todoListCard.appendChild(todoItem);
-        
         input.value= '';
-
 
         //Skapar objekt att skicka till databasen
         const newTodo = {
@@ -111,36 +96,42 @@ const addTodos = (e) => {
             .then(res => res.json())
             .then (data => {
               todosArray.push(data);
-              const todoItem = createTodoElement(inputValue);
+              const todoItem = document.createElement('div');
+              todoItem.classList.add('todos');
+          
+              const pInput = document.createElement('p');
+              pInput.innerText = inputValue;
+          
+              const btn = document.createElement('button');
+              btn.classList.add('btn')
+              btn.classList.add('btn-dark')
+              btn.innerText = 'delete';
+              
+          
+              todoItem.appendChild(pInput);
+              todoItem.appendChild(btn);
               todoListCard.appendChild(todoItem);
+              console.log(todosArray)
+              todosArray.forEach(input => {
+              btn.id = input.id;
+              })
+              
             })
 
 }
 
-
 form.addEventListener('submit', addTodos);
-// (e) =>{
-// e.preventDefault();
-// const input = form.querySelector('input');
-// const inputValue = input.value;
-
-// if(inputValue.trim().length == ""){
-//     //skapa ett element och lägg till innertext
-//     return
-// };
-
-// const todoItem = createTodoElement(inputValue);
-// todoListCard.appendChild(todoItem);
-
-// input.value= '';
-
-// })
 
 
 
-//lyssnar efter att ta bort vid delete samt överstrykning av text
-todoListCard.addEventListener('click', e => {
+
+
+//TA BORT
+
+const removeTodo = (e) => {
     if(e.target.innerText === 'delete'){
+        // fetch(BASE_URL +1)
+
         e.target.parentElement.remove();
     }
     
@@ -152,4 +143,25 @@ todoListCard.addEventListener('click', e => {
         e.target.querySelector('p').classList.toggle('done')
     }
 
-})
+}
+
+
+//lyssnar efter att ta bort vid delete samt överstrykning av text
+todoListCard.addEventListener('click', removeTodo);
+
+
+
+//  e => {
+//     if(e.target.innerText === 'delete'){
+//         e.target.parentElement.remove();
+//     }
+    
+//     if(e.target.nodeName === 'P'){
+//         e.target.classList.toggle('done')
+//     }
+//     if(e.target.nodeName === 'DIV' || e.target.nodeName === 'DIV'){
+
+//         e.target.querySelector('p').classList.toggle('done')
+//     }
+
+// })
