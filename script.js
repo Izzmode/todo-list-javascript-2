@@ -3,6 +3,9 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';
 const NEW_URL = 'https://jsonplaceholder.typicode.com/todos/?page=1&_limit=7';
 const todosArray = [];
 const todoListCard = document.querySelector('.card');
+const modal = document.querySelector('.modal');
+
+const test = document.querySelector('.test-wrapper');
 
 //Hämtar från databasen
 const getTodos = () => {
@@ -37,7 +40,8 @@ todosArray.forEach(todo => {
 
     todoItem.appendChild(pInput);
     todoItem.appendChild(btn);
-    todoListCard.appendChild(todoItem);
+    test.appendChild(todoItem);
+    // todoListCard.appendChild(todoItem);
 })
 };
 
@@ -76,8 +80,11 @@ const addTodos = (e) => {
         
         if(inputValue.trim().length == ""){
             //tbd skapa ett element och lägg till innertext
+            document.querySelector('.error').innerText = 'Du kan inte lägga till utan innehåll'
             return
         };
+
+        document.querySelector('.error').innerText = '';
         
         input.value= '';
 
@@ -111,8 +118,8 @@ const addTodos = (e) => {
           
               todoItem.appendChild(pInput);
               todoItem.appendChild(btn);
-              todoListCard.appendChild(todoItem);
-              console.log(todosArray)
+              test.appendChild(todoItem);
+            //   todoListCard.appendChild(todoItem);
               todosArray.forEach(input => {
               btn.id = input.id;
               })
@@ -124,16 +131,21 @@ const addTodos = (e) => {
 form.addEventListener('submit', addTodos);
 
 
+//Lägger till pop-up fönster
+
+modal.addEventListener('click', e =>{
+        if(e.target.classList.contains('active')){
+        modal.classList.remove('active');
+    }
+    
+})
 
 
 
 //TA BORT
 
 const removeTodo = (e) => {
-    // if(e.target.classList.contains('done')){
-    //     return
-    // }
-    if(e.target.innerText === 'delete' && !e.target.previousElementSibling.classList.contains('done')){
+    if(e.target.innerText === 'delete' && e.target.previousElementSibling.classList.contains('done')){
         fetch(BASE_URL + e.target.id, {
             method: 'DELETE'
         })
@@ -141,13 +153,12 @@ const removeTodo = (e) => {
             console.log(res)
             if (res.ok){
                 e.target.parentElement.remove();
+
             }
              return res.json()})
-        
     }
-    if(e.target.previousElementSibling.classList.contains('done')){
-        //tbd skapa klass och aktivera modal
-    }
+    
+    console.log(e.target.previousElementSibling)
     
     if(e.target.nodeName === 'P'){
         e.target.classList.toggle('done')
@@ -156,9 +167,16 @@ const removeTodo = (e) => {
 
         e.target.querySelector('p').classList.toggle('done')
     }
+    if( !(e.target.previousElementSibling.classList.contains('done')) && e.target.innerText === 'delete'){
+        modal.classList.add('active'); 
+        
+    };
 
 }
 
 
+
 //lyssnar efter att ta bort vid delete samt överstrykning av text
 todoListCard.addEventListener('click', removeTodo);
+
+//byt ut mot test? fortsätt felsöka, men funkade 17/1 19.53
