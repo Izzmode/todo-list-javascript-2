@@ -5,7 +5,7 @@ const todosArray = [];
 const todoListCard = document.querySelector('.card');
 const modal = document.querySelector('.modal');
 
-const test = document.querySelector('.test-wrapper');
+const todoWrapper = document.querySelector('.todo-wrapper');
 
 //Hämtar från databasen
 const getTodos = () => {
@@ -40,7 +40,7 @@ todosArray.forEach(todo => {
 
     todoItem.appendChild(pInput);
     todoItem.appendChild(btn);
-    test.appendChild(todoItem);
+    todoWrapper.appendChild(todoItem);
 
     if(todo.completed){
         pInput.classList.toggle('done');
@@ -122,7 +122,7 @@ const addTodos = (e) => {
           
               todoItem.appendChild(pInput);
               todoItem.appendChild(btn);
-              test.appendChild(todoItem);
+              todoWrapper.appendChild(todoItem);
             //   todoListCard.appendChild(todoItem);
               todosArray.forEach(input => {
               btn.id = input.id;
@@ -183,4 +183,4 @@ const removeTodo = (e) => {
 //lyssnar efter att ta bort vid delete samt överstrykning av text
 todoListCard.addEventListener('click', removeTodo);
 
-//byt ut mot test? fortsätt felsöka, men funkade 17/1 19.53
+//byt ut mot todoWrapper? fortsätt felsöka, men funkade 17/1 19.53
