@@ -130,9 +130,18 @@ form.addEventListener('submit', addTodos);
 
 const removeTodo = (e) => {
     if(e.target.innerText === 'delete'){
-        // fetch(BASE_URL +1)
-
-        e.target.parentElement.remove();
+        fetch(BASE_URL + e.target.id, {
+            method: 'DELETE'
+        })
+        .then(res => {
+            console.log(res)
+            if (res.ok){
+                e.target.parentElement.remove();
+            }
+             return res.json()})
+        
+        
+        
     }
     
     if(e.target.nodeName === 'P'){
