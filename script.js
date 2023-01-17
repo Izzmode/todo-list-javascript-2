@@ -1,11 +1,12 @@
 const form = document.querySelector('.card form');
 const BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';
+const NEW_URL = 'https://jsonplaceholder.typicode.com/todos/?page=1&_limit=7';
 const todosArray = [];
 const todoListCard = document.querySelector('.card');
 
 //Hämtar från databasen
 const getTodos = () => {
-    fetch(BASE_URL)
+    fetch(NEW_URL)
     .then(res => res.json())
     .then (data => {
         data.forEach(todo => {
@@ -129,7 +130,10 @@ form.addEventListener('submit', addTodos);
 //TA BORT
 
 const removeTodo = (e) => {
-    if(e.target.innerText === 'delete'){
+    // if(e.target.classList.contains('done')){
+    //     return
+    // }
+    if(e.target.innerText === 'delete' && !e.target.previousElementSibling.classList.contains('done')){
         fetch(BASE_URL + e.target.id, {
             method: 'DELETE'
         })
@@ -140,8 +144,9 @@ const removeTodo = (e) => {
             }
              return res.json()})
         
-        
-        
+    }
+    if(e.target.previousElementSibling.classList.contains('done')){
+        //tbd skapa klass och aktivera modal
     }
     
     if(e.target.nodeName === 'P'){
@@ -157,20 +162,3 @@ const removeTodo = (e) => {
 
 //lyssnar efter att ta bort vid delete samt överstrykning av text
 todoListCard.addEventListener('click', removeTodo);
-
-
-
-//  e => {
-//     if(e.target.innerText === 'delete'){
-//         e.target.parentElement.remove();
-//     }
-    
-//     if(e.target.nodeName === 'P'){
-//         e.target.classList.toggle('done')
-//     }
-//     if(e.target.nodeName === 'DIV' || e.target.nodeName === 'DIV'){
-
-//         e.target.querySelector('p').classList.toggle('done')
-//     }
-
-// })
