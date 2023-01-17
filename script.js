@@ -41,6 +41,10 @@ todosArray.forEach(todo => {
     todoItem.appendChild(pInput);
     todoItem.appendChild(btn);
     test.appendChild(todoItem);
+
+    if(todo.completed){
+        pInput.classList.toggle('done');
+    }
     // todoListCard.appendChild(todoItem);
 })
 };
