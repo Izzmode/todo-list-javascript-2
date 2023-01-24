@@ -50,8 +50,6 @@ todosArray.forEach(todo => {
 };
 
 
-console.log(todosArray)
-
 //Skapa element som läggs till vid submit
 const createTodoElement = (todoInput) =>{
     const todoItem = document.createElement('div');
@@ -77,13 +75,12 @@ const createTodoElement = (todoInput) =>{
 
 const addTodos = (e) => {
 
-    ////hämtar det som skrivs och validerar
+    //hämtar det som skrivs och validerar
         e.preventDefault();
         const input = form.querySelector('input');
         const inputValue = input.value;
         
         if(inputValue.trim().length == ""){
-            //tbd skapa ett element och lägg till innertext
             document.querySelector('.error').innerText = 'Du kan inte lägga till utan innehåll'
             return
         };
@@ -96,7 +93,7 @@ const addTodos = (e) => {
         const newTodo = {
             title: inputValue
         }
-        console.log(newTodo)
+        
         
         fetch(BASE_URL, {
             method: 'POST', 
@@ -123,7 +120,6 @@ const addTodos = (e) => {
               todoItem.appendChild(pInput);
               todoItem.appendChild(btn);
               todoWrapper.appendChild(todoItem);
-            //   todoListCard.appendChild(todoItem);
               todosArray.forEach(input => {
               btn.id = input.id;
               })
@@ -162,16 +158,15 @@ const removeTodo = (e) => {
              return res.json()})
     }
     
-    console.log(e.target.previousElementSibling)
     
     if(e.target.nodeName === 'P'){
         e.target.classList.toggle('done')
     }
-    if(e.target.nodeName === 'DIV' || e.target.nodeName === 'DIV'){
+    if(e.target.nodeName === 'DIV'){
 
         e.target.querySelector('p').classList.toggle('done')
     }
-    if( !(e.target.previousElementSibling.classList.contains('done')) && e.target.innerText === 'delete'){
+    if(e.target.innerText === 'delete' && !(e.target.previousElementSibling.classList.contains('done')) ){
         modal.classList.add('active'); 
         
     };
@@ -183,4 +178,3 @@ const removeTodo = (e) => {
 //lyssnar efter att ta bort vid delete samt överstrykning av text
 todoListCard.addEventListener('click', removeTodo);
 
-//byt ut mot todoWrapper? fortsätt felsöka, men funkade 17/1 19.53
