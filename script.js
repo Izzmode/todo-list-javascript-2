@@ -115,14 +115,17 @@ const addTodos = (e) => {
               btn.classList.add('btn')
               btn.classList.add('btn-dark')
               btn.innerText = 'delete';
-              
+              btn.id=crypto.randomUUID();
+              data.id=btn.id;
           
               todoItem.appendChild(pInput);
               todoItem.appendChild(btn);
               todoWrapper.appendChild(todoItem);
-              todosArray.forEach(input => {
-              btn.id = input.id;
-              })
+            
+            //   todosArray.forEach(input => {
+            //   btn.id = input.id;
+            //   })
+            console.log(todosArray)
               
             })
 
@@ -145,6 +148,7 @@ modal.addEventListener('click', e =>{
 //TA BORT
 
 const removeTodo = (e) => {
+    console.log(e.target.id)
     if(e.target.innerText === 'delete' && e.target.previousElementSibling.classList.contains('done')){
         fetch(BASE_URL + e.target.id, {
             method: 'DELETE'
