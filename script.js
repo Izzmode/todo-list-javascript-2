@@ -122,9 +122,6 @@ const addTodos = (e) => {
               todoItem.appendChild(btn);
               todoWrapper.appendChild(todoItem);
             
-            //   todosArray.forEach(input => {
-            //   btn.id = input.id;
-            //   })
             console.log(todosArray)
               
             })
@@ -158,7 +155,12 @@ const removeTodo = (e) => {
             if (res.ok){
                 e.target.parentElement.remove();
 
+                const index = todosArray.findIndex(todo => todo.id == e.target.id)
+                todosArray.splice(index, 1)
+                
+
             }
+            console.log(todosArray)
              return res.json()})
     }
     
